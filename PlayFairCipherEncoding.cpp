@@ -14,15 +14,28 @@ using namespace std;
 char playfairMatrix[5][5];  
 string alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-unordered_set<char> getSetFromString(string str)
+// Function to remove all spaces from a given string
+string removeSpaces(string str)
 {
-    unordered_set<char> res;
+    str.erase(remove(str.begin(), str.end(), ' '), str.end());
+    return str;
+}
+
+vector<char> getVectorFromString(string str)
+{
+    vector<char> res;
+    vector<char>::iterator it;
     for(int i=0;i<str.length();i++)
     {
-        res.insert(str.at(i));
+        // std::find function call
+        it = std::find (res.begin(), res.end(), str.at(i));
+        if (it != res.end())
+        {
+            continue;
+        }
+        else
+            res.push_back(str.at(i));
     }
-
-    unordered_set<char>::iterator itr;
     return res;
 }
 
@@ -46,17 +59,6 @@ void dispPairVectors(vector<pair<char,char>> pairs)
         cout<<pairs.at(i).first<< " "<<pairs.at(i).second<<endl;
     }
 }
-vector<char> unorderedSetTOVector(unordered_set<char> keys)
-{
-    unordered_set<char>::iterator itr;
-    vector<char> res;
-    for (itr = keys.begin(); itr != keys.end(); itr++)
-    {
-        res.push_back(*itr);
-    }
-    reverse(res.begin(),res.end());
-    return res;
-}
 
 void createPlayFairMatrix(string key)
 {
@@ -67,9 +69,7 @@ void createPlayFairMatrix(string key)
 
     string alphabets = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
-    unordered_set<char> res = getSetFromString(key);
-
-    vector<char> result = unorderedSetTOVector(res);
+    vector<char> result = getVectorFromString(key);
     
     //Creating the 5x5 Matrix
     for(int i=0;i<5;i++)
@@ -200,9 +200,9 @@ pair<char,char> sameRow(pair<char,char> substring) // When the letters are on th
     {
         c2 = c2%5;
     }
-    else if(c1>=5)
+    else if(c4>=5)
     {
-        c1 = c1%5;
+        c4 = c4%5;
     }
     cipherstring = make_pair(playfairMatrix[c1][c2],playfairMatrix[c3][c4]);
 
@@ -265,11 +265,13 @@ string PlayFairEncode(vector<pair<char,char>> result)
 int main()
 {
     string text;
-    cout<<"Enter the Text you want to Encode using PlayFair Cipher";
+    cout<<"Enter the Text you want to Encode using PlayFair Cipher : ";
     getline(cin,text);
+    text = removeSpaces(text);
     string key;
     cout<<"Enter the Key : ";
     getline(cin,key);
+    key = removeSpaces(key);
 
     createPlayFairMatrix(key);
 
