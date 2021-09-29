@@ -190,7 +190,21 @@ pair<char,char> sameRow(pair<char,char> substring) // When the letters are on th
     coord1 = IndexInMatrix(substring.first);
     coord2 = IndexInMatrix(substring.second);
 
-    cipherstring = make_pair(playfairMatrix[coord1.first][coord1.second+1],playfairMatrix[coord2.first][coord2.second+1]);
+    int c1,c2,c3,c4;
+    c1 = coord1.first;
+    c2 = coord1.second+1;
+    c3 = coord2.first;
+    c4 = coord2.second+1;
+
+    if(c2>=5)
+    {
+        c2 = c2%5;
+    }
+    else if(c1>=5)
+    {
+        c1 = c1%5;
+    }
+    cipherstring = make_pair(playfairMatrix[c1][c2],playfairMatrix[c3][c4]);
 
     return cipherstring;
 }
@@ -202,7 +216,22 @@ pair<char,char> sameColumn(pair<char,char> substring) // When the letters are on
     coord1 = IndexInMatrix(substring.first);
     coord2 = IndexInMatrix(substring.second);
 
-    cipherstring = make_pair(playfairMatrix[coord1.first+1][coord1.second],playfairMatrix[coord2.first+1][coord2.second]);
+    int c1,c2,c3,c4;
+    c1 = coord1.first+1;
+    c2 = coord1.second;
+    c3 = coord2.first+1;
+    c4 = coord2.second;
+
+    if(c1>=5)
+    {
+        c1 = c1%5;
+    }
+    else if(c3>=5)
+    {
+        c3 = c3%5;
+    }
+
+    cipherstring = make_pair(playfairMatrix[c1][c2],playfairMatrix[c3][c4]);
     return cipherstring;
 }
 
